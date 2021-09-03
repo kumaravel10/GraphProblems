@@ -1,0 +1,58 @@
+package com.klab.algoexpert.graph;
+
+import java.util.ArrayList;
+import java.util.List;
+//DepthfirstSearch
+/*        A
+        /  |  \
+        B  C   D
+      /  \    /  \
+      E   F   G   H
+         / \    \
+        I   J   K     */
+        
+  /* result [A, B, E, F, I, J, C, D, G, K, H]*/
+public class GraphNode {
+	String Name;
+	List<GraphNode> children = new ArrayList<>();
+	
+	public GraphNode(String name) {
+		this.Name = name;
+	}
+	
+	public void add(String name) {
+		GraphNode child = new GraphNode(name);
+		children.add(child);
+	}
+	
+	public List<String> depthFirstSearch(List<String> array){
+		array.add(this.Name);
+		for(int i = 0; i<children.size();i++) {
+			children.get(i).depthFirstSearch(array);
+		}
+		return array;
+	}
+	
+	public static void main(String[] args) {
+		GraphNode gp = new GraphNode("A");
+		gp.add("B");
+		gp.add("C");
+		gp.add("D");
+		
+		gp.children.get(0).add("E");
+		gp.children.get(0).add("F");
+		
+		gp.children.get(2).add("G");
+		gp.children.get(2).add("H");
+		
+		gp.children.get(0).children.get(1).add("I");
+		gp.children.get(0).children.get(1).add("J");
+		
+		gp.children.get(2).children.get(0).add("K");
+		
+		List<String> result = gp.depthFirstSearch(new ArrayList<String>());
+		System.out.println(result);
+		
+	}
+
+}
